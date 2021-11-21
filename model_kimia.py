@@ -1,22 +1,3 @@
-
-prioritas = {
-    # Semakin Besar nilainya, prioritasnya semakin tinggi
-    'X' : 0,   # Halida
-    'NO2' : 1,
-    'R' : 2,    # Alkil
-    'NH2' : 3, 
-    'OH' : 4,
-    'CN' : 5,
-    'CHO' : 6,
-    'SO3H' : 7,
-    'COOH' : 8,
-}
-
-alkil = (
-        "CH3", "Metil",
-        "C2H5", "Etil"
-    )
-
 class Cabang():
     def __init__(self, gugus = None) -> None:
 
@@ -24,8 +5,23 @@ class Cabang():
         self.occupied = True if self.gugus else False
 
 class Rantai:
-    NAMA_iupac = None
-    NAMA_trivial = None
+    prioritas = {
+        # Semakin Besar nilainya, prioritasnya semakin tinggi
+        'X' : 0,   # Halida
+        'NO2' : 1,
+        'R' : 2,    # Alkil
+        'NH2' : 3, 
+        'OH' : 4,
+        'CN' : 5,
+        'CHO' : 6,
+        'SO3H' : 7,
+        'COOH' : 8,
+    }
+
+    alkil = (
+            "CH3", "Metil",
+            "C2H5", "Etil"
+        )
 
     def __init__(self) -> None:
         self.cabang = {
@@ -57,4 +53,19 @@ class Rantai:
                 count += 1
 
         return count
+
+    @property
+    def nama_rantai(self):
+        # Monosub
+        if self.jumlah_cabang == 1:
+            pass
+
+        # Bisub
+        elif self.jumlah_cabang == 2:
+            pass
+
+
+
+if __name__ == '__main__':
+    pass
 
