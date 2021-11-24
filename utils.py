@@ -26,5 +26,15 @@ def get_hexagon_vertices(radius , center: tuple):
 
     return points
 
+
+def multi_key_dict_get(dictionary, key):
+    """
+    Implementasi sederhana agar bisa multiple keys ke 1 value padad dictionary
+    """
+    for keys, value in dictionary.items():
+        if key in keys:
+            return value
+
 if __name__ == '__main__':
-    get_hexagon_vertices(50, (100,100))
+    pass
+

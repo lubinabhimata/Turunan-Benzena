@@ -1,50 +1,63 @@
+from utils import multi_key_dict_get
 
 class Cabang():
     def __init__(self, gugus: str = "") -> None:
-
         self.gugus = gugus
 
     @property
     def occupied(self):
         return False if self.gugus.isdigit() else True
 
-
 class Rantai:
+ 
     prioritas = {
         # Semakin Besar nilainya, prioritasnya semakin tinggi
-        'X'     : 0,  # Halida
-        'NO2'   : 1,
-        'R'     : 2,  # Alkil
-        'NH2'   : 3, 
-        'OH'    : 4,
-        'CN'    : 5,
-        'CHO'   : 6,
-        'SO3H'  : 7,
-        'COOH'  : 8,
+        ("Cl","Br","I","F")     : 0,    # Halida
+        'NO2'                   : 1,    # Nitro
+        'R'                     : 2,    # Alkil
+        'NH2'                   : 3,    # Amina
+        'OH'                    : 4,    # Hidroksi
+        'CN'                    : 5,    # Sianida
+        'CHO'                   : 6,    # Aldehid
+        'SO3H'                  : 7,    # Sulfonat
+        'COOH'                  : 8,    # Karboksilat
     }
     alkil = (
         "metil", "CH3",
-        "etil", "C2H5", "CH3CH2", "CH2CH3"
-        "butil",
-        "isopropil",
-        "pentil",
+        "etil", "C2H5", "CH3CH2", "CH2CH3",
+        "butil", "C4H9", 
+        "pentil", "C5H11",
+        "isopropil", "C3H7",
         "propil",
     )
-    gol7 = {
-        "Cl"    : "kloro",
-        "Br"    : "bromo",
-        "I"     : "iodo",
-        "F"     : "flouro",
-    }
 
     atom_gugus = {
-        #"ALKIL"         : "ALKILbenzena",    # ALKIL nanti diganti sama alkil sesuai
-        "hidroksi"      : "hidroksi",
-        "amina"         : "amino",
-        "karboksilat"   : "karboksi",
-        "etena"         : "vinil",
-        "aldehid"       : "aldehida",
-        "metoksi"       : "metoksi"
+        # Alkil
+        ("metil", "CH3",)                       : "metil",
+        ("etil", "C2H5", "CH3CH2", "CH2CH3",)   : "etil",
+        ("butil", "C4H9")                       : "butil",
+        ("pentil", "C5H11")                     : "pentil",
+        ("isopropil", "C3H7")                   : "isopropil",
+        ("propil", )                            : "propil",
+
+        # Atom Gugus
+        ("hidroksi", "OH")                      : "hidroksi",
+        ("amina", "NH2")                        : "amino",
+        ("karboksilat", "COOH")                 : "karboksi",
+        ("etena", "CH=CH", "CHCH",)             : "vinil",
+        ("aldehid","CHO")                       : "aldehida",
+        ("metoksi" "OCH3",)                     : "metoksi",
+
+        # Golongan 7 Halida
+        "Cl"                                    : "kloro",
+        "Br"                                    : "bromo",
+        "I"                                     : "iodo",
+        "F"                                     : "flouro",
+
+        # senyawa dari prioritas / random?
+        ("nitro", "NO2")                        : "nitro",
+        ("sianida", "CN")                       : "siano",
+        ("sulfonat", "SO3H")                    : "sulfo",
     }
 
     def __init__(self) -> None:
@@ -112,27 +125,41 @@ class Rantai:
 
         # Monosub
         if self.jumlah_cabang == 1:
-            cabang = self.cabang[cabang_aktif[0]]
+            cabang = self.cabang[cabang_aktif[0]].gugus
 
-            if cabang.gugus in self.alkil:
-                nama = f"{cabang.gugus}benzena"
-
-            elif cabang.gugus in self.gol7:
-                nama = f"{self.gol7[cabang.gugus]}benzena"
-
-            elif cabang.gugus in self.atom_gugus:
-                nama = f"{self.atom_gugus[cabang.gugus]}benzena"
-
-            else: 
-                nama = "TIDAK DAPAT NAMA"
+            nama = f"{multi_key_dict_get(self.atom_gugus, cabang)}benzena"
 
         # Bisub
         elif self.jumlah_cabang == 2:
-            print("BISUB")
             bentuk = self.identifikasi_posisi()
-            print(bentuk)
 
-            nama = "BELUM BISA BISUB"
+            cabang_1, cabang_2 = [self.cabang[x].gugus for x in self.cabang_aktif]
+
+            # Cabang Sama
+            if cabang_1 == cabang_2:
+                nama = f"{bentuk}-di{multi_key_dict_get(self.atom_gugus,cabang_1)}benzena"
+
+            # Cabang Beda
+            else:
+
+                # Kalo cabang adalah alkil, pembandingnya adalah 'R'
+                pembanding_1 = 'R' if cabang_1 in self.alkil else cabang_1
+                pembanding_2 = 'R' if cabang_2 in self.alkil else cabang_2
+
+
+                # Kalo prioritas lebih tinggi, artinya dia jadi cabang prioritas
+                if (multi_key_dict_get(self.prioritas,pembanding_1) > 
+                        multi_key_dict_get(self.prioritas,pembanding_2)):
+                    cabang_prioritas, cabang_bawaan = cabang_1, cabang_2
+
+                else:
+                    cabang_prioritas, cabang_bawaan = cabang_2, cabang_1
+
+                nama = (f"{bentuk}-"
+                    f"{multi_key_dict_get(self.atom_gugus, cabang_bawaan)}"
+                    f"{multi_key_dict_get(self.atom_gugus, cabang_prioritas)}"
+                    "benzena"
+                )
 
         else:
             return "TIDAK ADA CABANG"

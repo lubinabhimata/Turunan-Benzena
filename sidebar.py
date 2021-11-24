@@ -9,7 +9,6 @@ class SideBar(tk.Frame):
         super().__init__(*args,**kwargs)
 
 
-
         # ------ Delete Cabang -------
         self.entry_delete_cabang = tk.Entry(self,width=2, font=(FONT_FAMILY,10))
         self.entry_delete_cabang.place(anchor='n', relx=0.5, rely=0.01,)
@@ -50,12 +49,17 @@ class SideBar(tk.Frame):
                                     relwidth=0.8)
         # ----------------------------
 
-
     def hitung(self):
+        """
+        cari tahu nama rantai berdasarkan cabang yang ada
+        """
         messenger.send("main_app",
                 f"update_nama_rantai()")
 
     def delete_cabang(self):
+        """
+        Hapus Cabang ( Balikin cabang ke kondisi awal )
+        """
         cabang = self.entry_delete_cabang.get()
         self.entry_delete_cabang.delete(0,'end')
 
@@ -66,6 +70,9 @@ class SideBar(tk.Frame):
         messenger.send("main_app", f"update_cabang('{cabang}', '{cabang}')")
 
     def insert_cabang(self):
+        """
+        Masukkin gugus ke suatu cabang
+        """
         nomor_cabang = self.entry_nomor_cabang.get()
         value_cabang = self.entry_isi_cabang.get()
         self.entry_nomor_cabang.delete(0,'end')

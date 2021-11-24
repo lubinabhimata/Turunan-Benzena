@@ -1,5 +1,5 @@
 # -------- CONSTANTS ---------- #
-WINDOW_HEIGHT = 600 
+WINDOW_HEIGHT = 600
 WINDOW_WIDTH = 600
 
 BAR_WIDTH = 250
@@ -15,22 +15,25 @@ MESSENGER_CLOCK = 100 # milisecond
 
 
 # -------- SENYAWA KIMIA ---------- #
-
 CABANG_KIMIA = (
-    "metil",
-    "etil",
-    "butil",
-    "isopropil",
-    "pentil",
+    "metil", "CH3",
+    "etil","C2H5", "CH3CH2", "CH2CH3",
+    "butil","C4H9",
+    "isopropil", "C3H7",
     "propil",
+    "pentil", "C5H11",
     "Cl",
     "Br",
     "I",
     "F",
-    "hidroksi",
-    "amina",
-    "karboksilat",
-    "etena",
-    "aldehid",
+    "hidroksi", "OH",
+    "amina", "NH2",
+    "karboksilat", "COOH",
+    "etena", "CH=CH", "CHCH",
+    "aldehid","CHO",
+    "metoksi","OCH3",
+    "nitro", "NO2",
+    "sianida", "CN",
+    "sulfonat", "SO3H"
 )
 

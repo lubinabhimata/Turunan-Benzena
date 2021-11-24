@@ -3,7 +3,6 @@ import tkinter as tk
 import utils
 
 from constants import POLYGON_RADIUS, POLYGON_CENTER, FONT_FAMILY
-from messenger import messenger
 
 from model_kimia import Rantai
 
@@ -27,12 +26,10 @@ class MainApp(tk.Frame):
                 font=(FONT_FAMILY, 18))
         self.label_nama_iupac.place(anchor='n', relx=0.5, rely=0.80)
 
-        self.label_nama_trivial = tk.Label(self.canvas, width=30, text="toluena",
-                bg='lightgreen',
-                font=(FONT_FAMILY, 18))
-        self.label_nama_trivial.place(anchor='n', relx=0.5, rely=0.85)
-
     def create_hexagon(self, canvas):
+        """
+        Gambar Hexagon 
+        """
         self.points = utils.get_hexagon_vertices(POLYGON_RADIUS, POLYGON_CENTER)# {{{
 
         canvas.create_polygon(self.points,
@@ -41,6 +38,9 @@ class MainApp(tk.Frame):
                     width=2)# }}}
 
     def create_cabang_hexagon(self):
+        """
+        Label cabang hexagon
+        """
         font = (FONT_FAMILY,16)
         label_width_char = 10
 
@@ -92,7 +92,6 @@ class MainApp(tk.Frame):
         Update Nama Rantai berdasarkan cabang2 yang ada
         """
         self.label_nama_iupac.config(text=self.rantai.nama_rantai)
-        #self.label_nama_trivial.config(text=trivial)
 
     def reset_cabang(self):
         """
