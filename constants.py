@@ -12,3 +12,25 @@ FONT_FAMILY = "Ubuntu"
 
 MESSENGER_CLOCK = 100 # milisecond
 # ----------------------------- #
+
+
+# -------- SENYAWA KIMIA ---------- #
+
+CABANG_KIMIA = (
+    "metil",
+    "etil",
+    "butil",
+    "isopropil",
+    "pentil",
+    "propil",
+    "Cl",
+    "Br",
+    "I",
+    "F",
+    "hidroksi",
+    "amina",
+    "karboksilat",
+    "etena",
+    "aldehid",
+)
+

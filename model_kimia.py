@@ -1,11 +1,12 @@
+
 class Cabang():
-    def __init__(self, gugus = None) -> None:
+    def __init__(self, gugus: str = "") -> None:
 
         self.gugus = gugus
 
     @property
     def occupied(self):
-        return True if self.gugus else False
+        return False if self.gugus.isdigit() else True
 
 
 class Rantai:
@@ -29,32 +30,31 @@ class Rantai:
         "pentil",
         "propil",
     )
-
     gol7 = {
-        "Cl"    : "Klorida",
-        "Br"    : "Bromida",
-        "I"     : "Iodida",
-        "F"     : "Flour",
+        "Cl"    : "kloro",
+        "Br"    : "bromo",
+        "I"     : "iodo",
+        "F"     : "flouro",
     }
 
     atom_gugus = {
-            #"ALKIL"         : "ALKILbenzena",    # ALKIL nanti diganti sama alkil sesuai
-            "hidroksi"      : "Hidroksibenzena",
-            "amina"         : "Aminobenzena",
-            "karboksilat"   : "Karboksibenzena",
-            "etena"         : "Vinilbenzena",
-            "aldehid"       : "Aldehidabenzena",
-            "metoksi"       : "Metoksibenzena"
+        #"ALKIL"         : "ALKILbenzena",    # ALKIL nanti diganti sama alkil sesuai
+        "hidroksi"      : "hidroksi",
+        "amina"         : "amino",
+        "karboksilat"   : "karboksi",
+        "etena"         : "vinil",
+        "aldehid"       : "aldehida",
+        "metoksi"       : "metoksi"
     }
 
     def __init__(self) -> None:
         self.cabang = {
-            1 : Cabang(),
-            2 : Cabang(),
-            3 : Cabang(),
-            4 : Cabang(),
-            5 : Cabang(),
-            6 : Cabang(),
+            1 : Cabang(gugus="1"),
+            2 : Cabang(gugus="2"),
+            3 : Cabang(gugus="3"),
+            4 : Cabang(gugus="4"),
+            5 : Cabang(gugus="5"),
+            6 : Cabang(gugus="6"),
         }
 
     def identifikasi_posisi(self) -> str:
@@ -67,7 +67,17 @@ class Rantai:
         HANYA BERLAKU UNTUK BISUBSTITUEN
         """
         if self.jumlah_cabang == 2:
-            pass
+            cabang_aktif = self.cabang_aktif
+            print(cabang_aktif)
+            selisih = abs(cabang_aktif[0] - cabang_aktif[1])
+
+            if selisih == 3:
+                return "para"
+            elif selisih == 1 or selisih == 5:
+                return "orto"
+
+            elif selisih == 2 or selisih == 4:
+                return "meta"
 
         else:
             return ""
@@ -84,6 +94,7 @@ class Rantai:
 
         return count
 
+    @property
     def cabang_aktif(self) -> list[int]:
         """
         CABANG-CABANG YANG ADA ISINYA NOMOR BRP AJA
@@ -95,10 +106,9 @@ class Rantai:
 
         return hasil
 
-
     @property
-    def nama_rantai(self):
-        cabang_aktif = self.cabang_aktif()
+    def nama_rantai(self) -> str:
+        cabang_aktif = self.cabang_aktif
 
         # Monosub
         if self.jumlah_cabang == 1:
@@ -111,13 +121,18 @@ class Rantai:
                 nama = f"{self.gol7[cabang.gugus]}benzena"
 
             elif cabang.gugus in self.atom_gugus:
-                nama = self.atom_gugus[cabang.gugus.lower()]
+                nama = f"{self.atom_gugus[cabang.gugus]}benzena"
 
-            else: nama = None
+            else: 
+                nama = "TIDAK DAPAT NAMA"
 
         # Bisub
         elif self.jumlah_cabang == 2:
-            pass
+            print("BISUB")
+            bentuk = self.identifikasi_posisi()
+            print(bentuk)
+
+            nama = "BELUM BISA BISUB"
 
         else:
             return "TIDAK ADA CABANG"
@@ -128,14 +143,11 @@ class Rantai:
 if __name__ == '__main__':
     rantai = Rantai()
 
-    rantai.cabang[1].gugus = "metil"
+    rantai.cabang[2].gugus = "metil"
     print(rantai.nama_rantai)
 
-    rantai.cabang[1].gugus = "etil"
+    rantai.cabang[2].gugus = "hidroksi"
     print(rantai.nama_rantai)
 
-    rantai.cabang[1].gugus = "F"
-    print(rantai.nama_rantai)
-
-    rantai.cabang[1].gugus = "etena"
+    rantai.cabang[2].gugus = "Cl"
     print(rantai.nama_rantai)

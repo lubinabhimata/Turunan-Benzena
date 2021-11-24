@@ -5,10 +5,13 @@ import utils
 from constants import POLYGON_RADIUS, POLYGON_CENTER, FONT_FAMILY
 from messenger import messenger
 
+from model_kimia import Rantai
+
 class MainApp(tk.Frame):
     def __init__(self,*args,**kwargs) -> None:
         super().__init__(*args, **kwargs)
 
+        self.rantai = Rantai()
 
         self.canvas = tk.Canvas(self,
                 #bg=None,
@@ -38,27 +41,33 @@ class MainApp(tk.Frame):
                     width=2)# }}}
 
     def create_cabang_hexagon(self):
-        font = (FONT_FAMILY,16)# {{{
+        font = (FONT_FAMILY,16)
         label_width_char = 10
 
         self.cabang = {
             1 : tk.Label( # cabang 1
-                    self,font=font, width=label_width_char,text="F",),                               
+                    self,font=font, width=label_width_char,
+                    text="1",),
             2 : tk.Label( # cabang 2                               
-                    self,font=font, width=label_width_char,text="Br",
+                    self,font=font, width=label_width_char,
+                    text="2",
                     anchor='w',),
             3 : tk.Label( # cabang 3
-                    self,font=font, width=label_width_char,text="C2H5",
+                    self,font=font, width=label_width_char,
+                    text="3",
                     anchor='w',),
             4 : tk.Label( # cabang 4
-                    self,font=font, width=label_width_char,text="NO2",),
+                    self,font=font, width=label_width_char,
+                    text="4",),
             5 : tk.Label( # cabang 5
-                    self,font=font, width=label_width_char,text="CH3",
+                    self,font=font, width=label_width_char,
+                    text="5",
                     anchor='e',),
             6 : tk.Label( # cabang 6
-                    self,font=font, width=label_width_char,text="K2SO4",
+                    self,font=font, width=label_width_char,
+                    text="6",
                     anchor='e',),
-        }# }}}
+        }
 
         self.cabang[1].place(x=self.points[0][0], y=self.points[0][1], anchor="s")
         self.cabang[2].place(x=self.points[1][0], y=self.points[1][1], anchor="sw")
@@ -73,12 +82,17 @@ class MainApp(tk.Frame):
         """
         self.cabang[int(cabang)].config(text=value)
 
-    def update_nama_rantai(self, iupac: str, trivial: str):
+        if cabang == value:
+            self.rantai.cabang[int(cabang)].gugus = cabang
+        else:
+            self.rantai.cabang[int(cabang)].gugus = value
+
+    def update_nama_rantai(self):
         """
         Update Nama Rantai berdasarkan cabang2 yang ada
         """
-        self.label_nama_iupac.config(text=iupac)
-        self.label_nama_trivial.config(text=trivial)
+        self.label_nama_iupac.config(text=self.rantai.nama_rantai)
+        #self.label_nama_trivial.config(text=trivial)
 
     def reset_cabang(self):
         """
@@ -86,7 +100,4 @@ class MainApp(tk.Frame):
         """
         for i in range(1,7):
             self.update_cabang(str(i), str(i))
-
-
-
 
