@@ -44,7 +44,7 @@ class Rantai:
         ("hidroksi", "OH")                      : "hidroksi",
         ("amina", "NH2")                        : "amino",
         ("karboksilat", "COOH")                 : "karboksi",
-        ("etena", "CH=CH", "CHCH",)             : "vinil",
+        ("etena", "CH2=CH2", "CHCH",)             : "vinil",
         ("aldehid","CHO")                       : "aldehida",
         ("metoksi" "OCH3",)                     : "metoksi",
 

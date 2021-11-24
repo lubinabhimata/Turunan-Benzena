@@ -29,7 +29,7 @@ CABANG_KIMIA = (
     "hidroksi", "OH",
     "amina", "NH2",
     "karboksilat", "COOH",
-    "etena", "CH=CH", "CHCH",
+    "etena", "CH2=CH2", "CH2CH2",
     "aldehid","CHO",
     "metoksi","OCH3",
     "nitro", "NO2",
