@@ -81,7 +81,6 @@ class Rantai:
         """
         if self.jumlah_cabang == 2:
             cabang_aktif = self.cabang_aktif
-            print(cabang_aktif)
             selisih = abs(cabang_aktif[0] - cabang_aktif[1])
 
             if selisih == 3:
@@ -136,7 +135,8 @@ class Rantai:
             cabang_1, cabang_2 = [self.cabang[x].gugus for x in self.cabang_aktif]
 
             # Cabang Sama
-            if cabang_1 == cabang_2:
+            if (multi_key_dict_get(self.atom_gugus, cabang_1) == 
+                    multi_key_dict_get(self.atom_gugus, cabang_2)):
                 nama = f"{bentuk}-di{multi_key_dict_get(self.atom_gugus,cabang_1)}benzena"
 
             # Cabang Beda
